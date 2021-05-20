@@ -28,6 +28,9 @@ export function getCommand(
 ): [string[], boolean] {
   const sshAddress = address(headers, user, host);
   const localLogin = !forcessh && localhost(host);
+  const urlcommand = headers.referer.match('.+/command/([^/]+)(?=[/\r\n?]|$)'); 
+  command = (urlcommand ? decodeURIComponent(urlcommand[1]) : command);
+  console.log("command is " + command);
   return localLogin
     ? [loginOptions(command, remoteAddress), localLogin]
     : [
